@@ -1,0 +1,29 @@
+﻿@page "/counterserver"
+@rendermode InteractiveServer
+@inherits Fluxor.Blazor.Web.Components.FluxorComponent
+<Fluxor.Blazor.Web.StoreInitializer />
+
+@using Fluxor
+@using Blazor8AutoWithFluxor.Shared.State.Counter
+
+<PageTitle>Counter Server</PageTitle>
+
+<h1>Counter Server</h1>
+
+<p role="status">Current count: @CounterState.Value.CurrentCount</p>
+
+<button class="btn btn-primary" @onclick="IncrementCount">Click me</button>
+
+@code {
+
+    [Inject]
+    private IState<CounterState> CounterState { get; set; }
+
+    [Inject]
+    private IDispatcher Dispatcher { get; set; }
+
+    private void IncrementCount()
+    {
+        Dispatcher.Dispatch(new IncrementCounterAction());
+    }
+}
